@@ -1,1 +1,8 @@
 sandbox
+
+*/out
+*/.gradle
+*/.idea
+*/build
+*/.DS_Store
+*/target
