@@ -1,18 +1,20 @@
 package com.example.app.domain.service;
 
-import com.example.app.domain.repository.UserMapper;
-import com.example.app.infrastructure.entity.UserEntity;
+import com.example.app.domain.object.User;
+import com.example.app.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class UserService {
     @Autowired
-    private UserMapper userMapper;
+    private UserRepository userRepository;
 
-    public List<UserEntity> selectAll() {
-        return userMapper.selectAll();
+    @Transactional
+    public List<User> selectAll() {
+        return userRepository.selectAll();
     }
 }
