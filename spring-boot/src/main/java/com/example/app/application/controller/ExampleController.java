@@ -17,4 +17,14 @@ public class ExampleController {
     public List<User> example1() {
         return userService.selectAll();
     }
+
+    @RequestMapping("/error500")
+    public List<User> error500() {
+        throw new RuntimeException("500");
+    }
+
+    @RequestMapping("/error400")
+    public List<User> error400() {
+        throw new RuntimeException("400");
+    }
 }
