@@ -1,0 +1,9 @@
+version: '3.1'
+services:
+  session_db:
+    image: redis:5
+    container_name: spring_session_db_example
+    ports:
+      - 16379:6379
+    command:
+      redis-server --requirepass redis
