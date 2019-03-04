@@ -5,7 +5,13 @@ spring:
     password: mariadb
     driver-class-name: com.mysql.cj.jdbc.Driver
   session:
-    store-type: redis
+#    store-type: redis
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+#      initialize-schema: embedded
+      schema: classpath:com/example/app/infrastructure/schema/db-session-schema.sql
+      table-name: t01_connect_session
   redis:
     host: localhost
     port: 16379
