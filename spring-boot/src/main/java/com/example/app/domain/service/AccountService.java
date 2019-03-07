@@ -24,7 +24,6 @@ public class AccountService extends AbstractUserDetailsAuthenticationProvider {
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {}
-
     @Override
     protected UserDetails retrieveUser(String userName, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         List<Account> account = accountRepository.accountList(userName);

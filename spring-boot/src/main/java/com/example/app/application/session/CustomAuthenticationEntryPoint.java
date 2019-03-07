@@ -16,6 +16,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             return;
         }
 
+
         response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
     }
 }

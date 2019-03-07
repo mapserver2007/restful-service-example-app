@@ -7,7 +7,7 @@ public class SocialSignUp implements ConnectionSignUp {
 
     @Override
     public String execute(Connection<?> connection) {
-        // TODO
+        // TODO ここでUserConnectionにINSERTするっぽい？
 
         return "test1";
     }

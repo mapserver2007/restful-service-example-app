@@ -18,3 +18,8 @@ mybatis:
 logging:
   level:
     org.springframework.boot.web.servlet.ServletContextInitializerBeans: trace
+
+twitter:
+  consumer_key: your key
+  consumer_secret: your secret
+  callback_url: call back url
