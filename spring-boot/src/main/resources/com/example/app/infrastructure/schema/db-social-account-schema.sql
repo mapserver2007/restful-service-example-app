@@ -12,4 +12,4 @@ CREATE TABLE t01_userconnection(
   expireTime bigint,
   PRIMARY KEY(userId, providerId, providerUserId)
 );
-CREATE UNIQUE INDEX UserConnectionRank ON UserConnection(userId, providerId, rank);
+CREATE UNIQUE INDEX IX_USER_CONNECTION ON t01_userconnection(userId, providerId, rank);

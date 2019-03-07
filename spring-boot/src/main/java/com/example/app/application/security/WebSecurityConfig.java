@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
 //            .requestMatcher(new BasicRequestMatcher())
             .authorizeRequests()
-            .antMatchers("/login/**", "/connect/**", "/auth/**").permitAll()
+            .antMatchers("/login", "/connect/**", "/auth/**").permitAll()
             .anyRequest().authenticated()
             .and()
 //            .addFilter(preAuthenticatedProcessingFilter())
@@ -83,6 +83,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SocialUserDetailsService socialUserDetailsService() {
-        return new CustomSocialUserDetailsService(userDetailsService());
+        return new CustomSocialUserDetailsService();
     }
 }

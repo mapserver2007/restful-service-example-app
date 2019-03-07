@@ -6,8 +6,6 @@ import java.io.Serializable;
 
 @Data
 public class Account implements Serializable {
-    int accountId;
     String loginId;
     String password;
-    String mailAddress;
 }

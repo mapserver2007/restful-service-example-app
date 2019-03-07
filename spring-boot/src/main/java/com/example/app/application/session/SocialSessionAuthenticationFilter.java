@@ -31,12 +31,19 @@ public class SocialSessionAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private TwitterKey twitterKey;
 
+    /**
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        String accessToken = request.getHeader("X-Auth-Token");
+        String accessToken = request.getHeader("X-Auth-Social-Token");
         SocialConnectionUser user = sessionService.connectionUser(accessToken);
 
         if (user != null) {
@@ -46,12 +53,7 @@ public class SocialSessionAuthenticationFilter extends OncePerRequestFilter {
             SocialUserDetails userDetails = socialUserDetailsService.loadUserByUserId(user.getDisplayName());
             SocialAuthenticationToken socialAuthenticationToken = new SocialAuthenticationToken(connection, userDetails,null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(socialAuthenticationToken);
-
-            // TODO ここで返さないほうがいい？ /get/token 的なところで取らせるか？
-            response.addHeader("X-Auth-Token", null);
         }
-
-        // TODO このフィルタを追加して認証OKでもBasic認証が実行されてしまい、セッションIDが作られるためどうにかする
 
         chain.doFilter(request, response);
     }

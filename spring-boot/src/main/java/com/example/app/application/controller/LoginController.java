@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,12 +37,18 @@ public class LoginController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/auth_token")
+    public ResponseEntity<Map<String, String>> getAuthToken() {
+        Map<String, String> response = new HashMap<>();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     /**
      * Twitter認証用URLを返却
      * @return
      */
-    @GetMapping("/auth/twitter")
-    public ResponseEntity<Map<String, String>> authTwitter() {
+    @GetMapping("/connect/twitter")
+    public ResponseEntity<Map<String, String>> connectTwitter() {
         Map<String, String> response = new HashMap<>();
         response.put("authorize_url", socialLoginService.createAuthorizeUrl());
 
@@ -49,22 +56,24 @@ public class LoginController {
     }
 
     /**
-     * Twitterログインを実行
+     * Twitter認証を実行し、アクセストークンを返却する
      * @param oauthToken
      * @param oauthVerifier
      * @return
      */
-    @GetMapping("/connect/twitter")
-    public ResponseEntity<Map<String, String>> twitterCallback(@RequestParam("oauth_token") String oauthToken, @RequestParam("oauth_verifier") String oauthVerifier) {
+    @GetMapping("/auth/twitter")
+    public ResponseEntity<Map<String, String>> authTwitter(@RequestParam("oauth_token") String oauthToken, @RequestParam("oauth_verifier") String oauthVerifier) {
         HttpStatus status;
         Map<String, String> response = new HashMap<>();
 
         try {
             socialLoginService.addConnection(oauthToken, oauthVerifier);
             response.put("message", "log in success.");
+            response.put("access_token", socialLoginService.getSessionId());
             status = HttpStatus.OK;
-        } catch (ConnectionRepositoryException e) {
+        } catch (ConnectionRepositoryException | IOException e) {
             response.put("message", e.getMessage());
+            response.put("access_token", "");
             status = HttpStatus.CONFLICT;
         }
 
